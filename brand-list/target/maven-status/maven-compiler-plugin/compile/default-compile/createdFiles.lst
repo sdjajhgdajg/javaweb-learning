@@ -1,0 +1,4 @@
+com\itheima\brandlist\servlet\AddBrandServlet.class
+com\itheima\brandlist\entity\Brand$BrandBuilder.class
+com\itheima\brandlist\servlet\BrandServlet.class
+com\itheima\brandlist\entity\Brand.class
