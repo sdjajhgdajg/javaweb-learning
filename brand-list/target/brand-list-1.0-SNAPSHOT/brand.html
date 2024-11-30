@@ -3,64 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <title>品牌列表</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet"href="css/style.css">
 </head>
 <body>
 <div class="container">
     <label>
-        <input type="button" value="添加商品" id="addButton">
+        <input type="button"value="添加商品"id="addButton"/>
     </label>
     <hr>
-    <table id="brandTable" class="responseTable"></table>
+    <table id="brandTable"class="responseTable"></table>
 </div>
+
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
+    window.onload = function() {
+        getBrandList();
+    }
+
     function getBrandList() {
         axios({
             method: "get",
             url: "http://localhost:8080/brand"
         }).then(resp => {
             let brands = resp.data;
-            let tableData = `
-                <tr>
+            let tableData =
+                ` <tr>
                     <th>序号</th>
                     <th>品牌名称</th>
-                    <th>企业名称</th>
+                    <th>企业排名</th>
                     <th>排序</th>
                     <th>品牌介绍</th>
                     <th>操作</th>
-                </tr>
-            `;
-
-            // 遍历响应数据
-            for (let i = 0; i < brands.length; i++) {  //循环遍历brands列表，对于每个表格对象添加信息填充到HTML表格行中，累加到tableBrand中
+                </tr>`
+            for (let i = 0; i < brands.length; i++) {
                 let brand = brands[i];
-                console.log(brand)
                 tableData +=
-                    `<tr data-id="${brand.id}">
+                    ` <tr data-id="${brand.id}">
                         <td>${brand.id}</td>
                         <td>${brand.brandName}</td>
                         <td>${brand.companyName}</td>
                         <td>${brand.ordered}</td>
                         <td>${brand.description}</td>
                         <td>
-                        <span>删除</span>
+                            <span class="deleteButton" data-id="${brand.id}">删除</span>
                         </td>
-                    </tr>
-                    `;
+                    </tr>`
             }
-            console.log(tableData)
-            // 拼接响应结果
-            const tableValue = document.getElementById("brandTable");//获取Brandtable对象
+
+            const tableValue = document.getElementById("brandTable");
             if (tableValue) {
                 tableValue.innerHTML = tableData;
+
+                // 使用事件委托为删除按钮添加事件监听器
+                document.getElementById("brandTable").addEventListener('click', function(event) {
+                    if (event.target.classList.contains('deleteButton')) {
+                        let brandId = event.target.getAttribute('data-id');
+                        deleteBrand(brandId);
+                    }
+                });
             }
+        })
+    }
+
+    function deleteBrand(brandId) {
+        axios({
+            method: 'get',
+            url: 'http://localhost:8080/deleteBrand?id=' + encodeURIComponent(brandId),
+        }).then(function (res) {
+            if (res.status === 200) {
+                const row = document.querySelector(`tr[data-id="${brandId}"]`);
+                if (row) {
+                    row.remove();
+                }
+            }
+        }).catch(function (error) {
+            console.error('Error deleting brand:', error);
         });
     }
 
-    // 页面加载完成后调用 getBrandList 函数
-    window.onload = getBrandList;
+    document.getElementById("addButton").onclick = function() {
+        location.href = "brandInfo.html";
+    }
 </script>
 </body>
 <style>

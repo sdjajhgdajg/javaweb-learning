@@ -148,8 +148,41 @@
             flex: 0 0 33%;
         }
 
+        .remember-box{
+            width: 70%;
+            display: flex;
+        }
+
         .clickable-header{
             cursor: pointer;
+        }
+
+        .captcha-container {
+            width: 70%;
+            margin: 10px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* 图形验证码图片样式 */
+        .captcha-img {
+            width: 60%;
+            border: 1px solid #e4e6e5;
+            border-radius: 3px;
+        }
+
+        /* 验证码输入框样式 */
+        .captcha-input {
+            width: 40%;
+            margin: 0;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #e4e6e5;
+            outline: none;
+            border-radius: 3px;
+            color: #333;
+            font-size: 13px;
         }
 
     </style>
@@ -170,14 +203,27 @@
         <!--用户登录-->
         <div>
             <label>
-                <input type="text" name="account" class="input-box" placeholder="手机号/邮箱">
+                <input type="text" name="account" class="input-box" placeholder="手机号/邮箱" id="username">
             </label>
         </div>
         <div>
             <label>
-                <input type="password" name="password" class="input-box" placeholder="密码">
+                <input type="password" name="password" class="input-box" placeholder="密码" id="password">
             </label>
         </div>
+
+        <div class="captcha-container">
+            <img src="/generate-captcha" class="captcha-img" id="captcha-img" alt="图形验证码">
+            <input type="text" name="captcha" class="captcha-input" placeholder="请输入图形验证码" id="captcha-input">
+        </div>
+
+        <div class="remember-box">
+            <p style="margin-right: 6px">记住我：</p>
+            <label>
+                <input type="checkbox" id="remember" name="remember">
+            </label>
+        </div>
+
         <div>
             <label>
                 <input type="submit" value="立即登录" class="btn">
@@ -230,6 +276,39 @@
     function register() {
         document.getElementById("login-form").style.display = "none";
         document.getElementById("register-section").style.display = "block";
+    }
+
+
+    let remember = document.getElementById('remember');
+    remember.onclick = function () {
+        let username = document.getElementById("username");
+        let password = document.getElementById("password");
+        if(remember.checked) {
+            username.value = getCookie('username');
+            password.value = getCookie('password');
+        }
+
+    }
+
+    function getCookie(name) {
+        const keyName = name+'=';
+        const cookies = document.cookie.split(';');
+        for(let i = 0;i < cookies.length;i++) {
+            const value = cookies[i].trim();
+            if(value.indexOf(keyName) === 0){
+                return value.substring(keyName.length,value.length);
+            }
+        }
+    }
+
+    // 刷新图形验证码的函数
+    function refreshCaptcha() {
+        document.getElementById("captcha-img").src = "/generate-captcha?" + new Date().getTime();
+    }
+
+    window.onload = function () {
+        // 页面加载时给图形验证码图片绑定点击事件，点击可刷新验证码
+        document.getElementById("captcha-img").onclick = refreshCaptcha;
     }
 </script>
 </body>

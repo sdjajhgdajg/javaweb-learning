@@ -92,10 +92,10 @@
                     <p style="color: #bdbdbd">${book.author}</p>
                 </div>
                 <div class="col-8">
-                    <p style="color:black"> 价格：${book.price}</p>
+                    <p style="color:#000000"> ${book.price}</p>
                 </div>
-                <div class="col-12">
-                    <p style="color: palevioletred"> 详情：${book.details}</p>
+                <div class="col-8">
+                    <p style="color:#000000"> ${book.detail}</p>
                 </div>
             </div>
         </div>

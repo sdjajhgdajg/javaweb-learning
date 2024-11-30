@@ -2,6 +2,7 @@ package com.itheima.brandlist.servlet;
 
 import com.alibaba.fastjson.JSON;
 import com.itheima.brandlist.entity.Brand;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -28,8 +29,16 @@ public class BrandServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Brand> brandlist=getBrandList();
         resp.setContentType("application/json; charset=utf-8");
-        req.getServletContext().setAttribute("brands", brandlist);
-        String jsonString= JSON.toJSONString(brandlist);
+        ServletContext servletContext=req.getServletContext();
+        Object brands=servletContext.getAttribute("brands");
+        List<Brand> brandList=null;
+        if(brands instanceof List){
+            brandList=(List<Brand>)brands;
+        }
+        brandList=brandList==null?getBrandList():brandList;
+        servletContext.setAttribute("brands",brandList);
+        req.getServletContext().setAttribute("brands", brandList);
+        String jsonString= JSON.toJSONString(brandList);
         resp.getWriter().write(jsonString);
     }
 }

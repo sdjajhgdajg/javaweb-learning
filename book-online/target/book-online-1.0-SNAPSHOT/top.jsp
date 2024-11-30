@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Lyc
-  Date: 2024/10/19
-  Time: 16:05
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page import="top.soft.bookonline.entity.User" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%

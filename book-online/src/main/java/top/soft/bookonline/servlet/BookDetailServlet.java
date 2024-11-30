@@ -13,26 +13,26 @@ import top.soft.bookonline.service.impl.BookServiceImpl;
 import java.io.IOException;
 
 /**
- * @author 35536
+ * @author Administrator
  * @description: TODO
- * @date 2024/10/26 16:06
+ * @date 2024/10/26 15:35
  */
 @WebServlet(urlPatterns = "/detail/*")
 public class BookDetailServlet extends HttpServlet {
     private BookService bookService;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String requestPath=req.getRequestURI().trim();
-        int position=requestPath.lastIndexOf("/");
-        String id=requestPath.substring(position+1);
-        Book book=bookService.getBookById(Integer.parseInt(id));
-        req.setAttribute("book", book);
-        req.getRequestDispatcher("/book_detail.jsp").forward(req,resp);
+    public void init(ServletConfig config) throws ServletException {
+        bookService = new BookServiceImpl();
     }
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
-        bookService=new BookServiceImpl();
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String requestPath = req.getRequestURI().trim();
+        int position = requestPath.lastIndexOf("/");
+        String id = requestPath.substring(position + 1);
+        Book book = bookService.getBookById(Integer.parseInt(id));
+        req.setAttribute("book", book);
+        req.getRequestDispatcher("/book_detail.jsp").forward(req, resp);
     }
 }
