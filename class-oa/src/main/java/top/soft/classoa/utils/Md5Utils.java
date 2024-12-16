@@ -3,9 +3,9 @@ package top.soft.classoa.utils;
 import org.apache.commons.codec.digest.DigestUtils;
 
 /**
- * @author 35536
+ * @author 86189
  * @description: TODO
- * @date 2024/11/30 15:00
+ * @date 2024/11/30 14:58
  */
 public class Md5Utils {
 

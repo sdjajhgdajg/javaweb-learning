@@ -6,9 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author 35536
+ * @author 86189
  * @description: TODO
- * @date 2024/11/30 14:46
+ * @date 2024/11/30 14:47
  */
 @Data
 @AllArgsConstructor
@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class User {
     private Long userId;
-    private String userName;
+    private String username;
     private String password;
     private Long employeeId;
     private Integer salt;

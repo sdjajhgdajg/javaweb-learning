@@ -3,14 +3,17 @@ package top.soft.classoa.utils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.Getter;
 import lombok.Setter;
+
+
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * @author 35536
+ * @author 86189
  * @description: TODO
  * @date 2024/11/30 15:48
  */
@@ -38,6 +41,7 @@ public class ResponseUtils {
 
     public String toJsonString() {
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         try {
             return objectMapper.writeValueAsString(this);
@@ -46,3 +50,4 @@ public class ResponseUtils {
         }
     }
 }
+
